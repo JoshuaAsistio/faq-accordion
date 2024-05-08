@@ -1,0 +1,14 @@
+{
+  "name": "faq-accordion",
+  "version": "1.0.0",
+  "description": "Front End Mentor FAQ Accordion Challenge",
+  "main": "index.js",
+  "scripts": {
+    "tailwind": "npx tailwindcss -i ./src/input.css -o ./build/style.css --watch"
+  },
+  "author": "Joshua Asistio",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.3"
+  }
+}
