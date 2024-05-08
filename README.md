@@ -33,73 +33,102 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Solution URL: [Check out the repository here](https://github.com/JoshuaAsistio/faq-accordion)
+- Live Site URL: [Live site URL here](https://faq-accordion-p6mg.onrender.com)
 
 ## My process
 
 ### Built with
 
 - Semantic HTML5 markup
-- CSS custom properties
 - Flexbox
-- CSS Grid
 - Mobile-first workflow
-- [React](https://reactjs.org/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
-- [Styled Components](https://styled-components.com/) - For styles
-
-**Note: These are just examples. Delete this note and replace the list above with your own choices**
+- [TailwindCSS](https://tailwindcss.com/) - For styles
 
 ### What I learned
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
+During this project, I learned to use tailwindcss to create a functional accordion.
 
-To see how you can add code snippets, see below:
+You can easily create an accordion with tailwindcss by using the hidden class and toggling it on and off with javascript:
 
 ```html
-<h1>Some HTML code I'm proud of</h1>
+<p class="text-[#2c122f] hidden accordion-content">
+  Frontend Mentor offers realistic coding challenges to help developers improve
+  their frontend coding skills with projects in HTML, CSS, and JavaScript. It's
+  suitable for all levels and ideal for portfolio building.
+</p>
 ```
 
-```css
-.proud-of-this-css {
-  color: papayawhip;
+This is the js for toggling the hidden class:
+
+```js
+import questions from "./questions.js";
+
+const buttons = document.getElementsByTagName("button");
+const mainElement = document.querySelector("#main");
+
+// dynamically adds questions based on the question.js file
+for (let question of questions) {
+  // create an element and give it the appropriate tailwind classes
+  // set the inner html of the element to be the same in the index.html
+  // Render the proper question and answer dynamically
+  const element = document.createElement("div");
+  element.classList.add("grid", "gap-8");
+  element.innerHTML = `<button
+  class="flex justify-between w-full items-center accordion-button hover:text-[#AD28EB]"
+>
+    <h2
+      class="text-left w-[200px] font-bold text-[#2c122f] sm:w-full hover:text-[inherit]"
+    >
+      ${question.question}
+    </h2>
+
+    <img src="images/icon-plus.svg" alt="plus icon" class="toggle-icon" />
+  </button>
+
+  <p class="text-[#2c122f] hidden accordion-content">
+    ${question.answer}
+  </p>
+`;
+
+  // append the div element together with an hr element to the main element
+  mainElement.append(element, document.createElement("hr"));
+}
+
+// placed below here so that the answers are rendered to the page first before being fetched here
+const contents = document.querySelectorAll(".accordion-content");
+
+for (let button of buttons) {
+  button.addEventListener("click", () => {
+    const toggleIcon = button.lastElementChild; // plus / minos icon
+    const content = button.nextElementSibling; // answers
+    const isOpen = content.classList.toggle("hidden"); // true or false
+
+    // makes sure that only one answer is open at a time
+    contents.forEach((item, index) => {
+      if (item !== content) {
+        item.classList.add("hidden");
+        document.querySelectorAll(".toggle-icon")[index].src =
+          "images/icon-plus.svg";
+      }
+    });
+
+    // hides and shows the answers when the same button is clicked consecutively.
+    if (isOpen) {
+      content.classList.add("hidden");
+      toggleIcon.setAttribute("src", "images/icon-plus.svg");
+      toggleIcon.setAttribute("alt", "plus icon");
+    } else {
+      content.classList.remove("hidden");
+      toggleIcon.setAttribute("src", "images/icon-minus.svg");
+      toggleIcon.setAttribute("alt", "minus icon");
+    }
+  });
 }
 ```
 
-```js
-const proudOfThisFunc = () => {
-  console.log("🎉");
-};
-```
-
-If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
-
-**Note: Delete this note and the content within this section and replace with your own learnings.**
-
-### Continued development
-
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
-
-**Note: Delete this note and the content within this section and replace with your own plans for continued development.**
-
-### Useful resources
-
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
-
-**Note: Delete this note and replace the list above with resources that helped you during the challenge. These could come in handy for anyone viewing your solution or for yourself when you look back on this project in the future.**
-
 ## Author
 
-- Website - [Add your name here](https://www.your-site.com)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
-- Twitter - [@yourusername](https://www.twitter.com/yourusername)
-
-**Note: Delete this note and add/remove/edit lines above based on what links you'd like to share.**
-
-## Acknowledgments
-
-This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
-
-**Note: Delete this note and edit this section's content as necessary. If you completed this challenge by yourself, feel free to delete this section entirely.**
+- Website - [Joshua Asistio](https://joshuaasistio.github.io/portfolio/)
+- Frontend Mentor - [@JoshuaAsistio](https://www.frontendmentor.io/profile/JoshuaAsistio)
+- Github - [@JoshuaAsistio](https://github.com/JoshuaAsistio)
